@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz de Diagnóstico — MeuFocoApp | Descubra seu Plano de Estudos Ideal</title>
+  <meta name="description" content="Responda 12 perguntas rápidas e descubra qual trilha de estudos vai te levar à aprovação no concurso, ENEM ou vestibular. Quiz gratuito do MeuFocoApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SPLASH / INTRO SCREEN -->
+  <section id="intro-screen" class="screen active">
+    <div class="intro-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-lines"></div>
+    </div>
+
+    <div class="intro-content">
+
+      <!-- Logo row -->
+      <div class="logo-wrap">
+        <div class="logo-icon-wrap">
+          <img src="assets/logo.png" alt="MeuFocoApp Logo" class="logo" />
+        </div>
+        <span class="logo-text">MeuFocoApp</span>
+      </div>
+
+      <!-- Nina avatar with neon halo -->
+      <div class="nina-avatar-wrap">
+        <div class="nina-halo"></div>
+        <img src="assets/nina.png" alt="Nina — Assistente MeuFocoApp" class="nina-avatar" />
+      </div>
+
+      <!-- Speech bubble — no arrow, text immediately visible after typing anim -->
+      <div class="speech-bubble" id="intro-bubble">
+        <div class="bubble-typing" id="typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+        <p id="intro-text" class="hidden">Oi! Eu sou a <strong>Nina</strong>, do MeuFocoApp 👋<br/>Vou te ajudar a descobrir a trilha de estudos ideal para<br/>você chegar à <strong>aprovação</strong>.</p>
+      </div>
+
+      <!-- Promise cards -->
+      <div id="intro-bottom" class="intro-bottom hidden">
+        <div class="promise-cards">
+          <div class="promise-card">
+            <div class="promise-icon">
+              <!-- Lightning bolt SVG -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="#FF8C00" stroke="#FFA500" stroke-width="0.5"/>
+              </svg>
+            </div>
+            <span>2 minutos</span>
+          </div>
+          <div class="promise-card">
+            <div class="promise-icon">
+              <!-- Target / bullseye icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="#FF6B8A" stroke-width="2"/>
+                <circle cx="12" cy="12" r="5.5" stroke="#FF4D6D" stroke-width="2"/>
+                <circle cx="12" cy="12" r="2" fill="#00D4C8"/>
+                <line x1="12" y1="2" x2="12" y2="5" stroke="#FF6B8A" stroke-width="2"/>
+                <line x1="22" y1="12" x2="19" y2="12" stroke="#FF6B8A" stroke-width="2"/>
+              </svg>
+            </div>
+            <span>100% gratuito</span>
+          </div>
+          <div class="promise-card">
+            <div class="promise-icon">
+              <!-- Bar chart SVG -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="14" width="4" height="7" rx="1" fill="#00D4C8"/>
+                <rect x="10" y="9" width="4" height="12" rx="1" fill="#4F8EF7"/>
+                <rect x="17" y="4" width="4" height="17" rx="1" fill="#A855F7"/>
+              </svg>
+            </div>
+            <span>Resultado<br/>personalizado</span>
+          </div>
+        </div>
+
+        <!-- CTA button -->
+        <button class="btn-primary" id="start-btn" onclick="startQuiz()">
+          Quero descobrir minha trilha &nbsp;→
+        </button>
+
+        <p class="already-user">Já é assinante? <a href="https://studyflowmvp.netlify.app/trilhas" target="_blank">Acesse sua conta</a></p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- QUIZ SCREEN -->
+  <section id="quiz-screen" class="screen">
+    <div class="quiz-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="quiz-header">
+      <div class="header-inner">
+        <img src="assets/logo.png" alt="MeuFocoApp" class="header-logo" />
+        <span class="header-brand">MeuFocoApp</span>
+        <div class="header-spacer"></div>
+        <div class="progress-info">
+          <span id="q-counter">1 / 12</span>
+        </div>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+      </div>
+    </header>
+
+    <!-- Question Area -->
+    <main class="quiz-main">
+      <div class="question-card" id="question-card">
+
+        <!-- Nina coach strip -->
+        <div class="coach-strip">
+          <img src="assets/nina.png" alt="Nina" class="coach-avatar" />
+          <div class="coach-bubble">
+            <p id="coach-hint">Vamos começar pelo mais importante 🎯</p>
+          </div>
+        </div>
+
+        <!-- Question image -->
+        <div class="q-image-wrap no-image" id="q-image-wrap">
+          <img id="q-image" src="" alt="" class="q-image" />
+        </div>
+
+        <!-- Question text -->
+        <h2 class="question-text" id="question-text"></h2>
+
+        <!-- Options -->
+        <div class="options-grid" id="options-grid"></div>
+
+        <!-- Nav -->
+        <div class="quiz-nav">
+          <button class="btn-back" id="back-btn" onclick="prevQuestion()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Voltar
+          </button>
+          <button class="btn-next hidden" id="next-btn" onclick="nextQuestion()">
+            Próxima
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- LOADING / ANALYZING SCREEN -->
+  <section id="loading-screen" class="screen">
+    <div class="quiz-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <div class="loading-content">
+      <img src="assets/nina.png" alt="Nina" class="loading-nina" />
+      <h2 class="loading-title">Nina está analisando seu perfil...</h2>
+      <p class="loading-sub">Identificando sua trilha ideal de estudos</p>
+      <div class="loading-steps">
+        <div class="step-item" id="step-1">
+          <div class="step-dot"></div>
+          <span>Identificando seu objetivo</span>
+        </div>
+        <div class="step-item" id="step-2">
+          <div class="step-dot"></div>
+          <span>Mapeando seus pontos críticos</span>
+        </div>
+        <div class="step-item" id="step-3">
+          <div class="step-dot"></div>
+          <span>Calculando sua trilha ideal</span>
+        </div>
+        <div class="step-item" id="step-4">
+          <div class="step-dot"></div>
+          <span>Personalizando seu cronograma</span>
+        </div>
+      </div>
+      <div class="loading-bar-wrap">
+        <div class="loading-bar" id="loading-bar"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section id="result-screen" class="screen">
+    <div class="result-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-lines"></div>
+    </div>
+
+    <div class="result-content">
+      <!-- Nina Result Header -->
+      <div class="result-header">
+        <div class="result-nina-wrap">
+          <img src="assets/nina.png" alt="Nina" class="result-nina" />
+        </div>
+        <div class="result-greeting">
+          <div class="result-badge" id="result-badge">🎯 Diagnóstico Completo</div>
+          <h1 class="result-title" id="result-title">Sua Trilha Ideal está Pronta!</h1>
+          <p class="result-subtitle" id="result-subtitle"></p>
+        </div>
+      </div>
+
+      <!-- Diagnosis Card -->
+      <div class="diagnosis-card">
+        <div class="diagnosis-header">
+          <span class="diagnosis-label">📋 Seu Diagnóstico</span>
+        </div>
+        <div class="diagnosis-body" id="diagnosis-body">
+          <!-- filled by JS -->
+        </div>
+      </div>
+
+      <!-- Recommended Plan -->
+      <div class="plan-card" id="plan-card">
+        <div class="plan-badge">✨ Trilha Recomendada pela Nina</div>
+        <div class="plan-header">
+          <div class="plan-icon" id="plan-icon">🚀</div>
+          <div>
+            <h3 class="plan-name" id="plan-name">Trilha Concurso Público</h3>
+            <p class="plan-desc" id="plan-desc">Cronograma personalizado com base no seu edital</p>
+          </div>
+        </div>
+        <ul class="plan-features" id="plan-features">
+          <!-- filled by JS -->
+        </ul>
+        <div class="plan-cta">
+          <a href="https://studyflowmvp.netlify.app/trilhas" target="_blank" class="btn-cta" id="cta-btn">
+            <span id="cta-text">Quero começar agora</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <p class="cta-sub">Acesse grátis por 7 dias · Sem cartão de crédito</p>
+        </div>
+      </div>
+
+      <!-- Social proof — Histórias de Sucesso -->
+      <div class="social-proof">
+        <h3 class="social-proof-title">Histórias de Sucesso</h3>
+        <div class="testimonials">
+
+          <!-- Testimonial 1 -->
+          <div class="testimonial">
+            <div class="t-avatar-wrap">
+              <div class="t-avatar" style="background: linear-gradient(135deg, #1a3a5c 0%, #0d2035 100%);">
+                <span class="t-avatar-initials">MA</span>
+              </div>
+            </div>
+            <div class="t-body">
+              <div class="t-header">
+                <div>
+                  <div class="t-name-row">
+                    <span class="t-name">Marcos A.</span>
+                    <span class="t-dot">•</span>
+                    <span class="t-role">Auditor Fiscal RF</span>
+                    <span class="t-verified">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#00D4C8"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Verificado
+                    </span>
+                  </div>
+                  <div class="t-stars">★★★★★</div>
+                </div>
+              </div>
+              <p class="t-text">Passei na Receita Federal depois de 2 anos tentando. A trilha do MeuFocoApp foi o divisor de águas.</p>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial">
+            <div class="t-avatar-wrap">
+              <div class="t-avatar" style="background: linear-gradient(135deg, #1a3a4a 0%, #0d2030 100%);">
+                <span class="t-avatar-initials">FS</span>
+              </div>
+            </div>
+            <div class="t-body">
+              <div class="t-header">
+                <div>
+                  <div class="t-name-row">
+                    <span class="t-name">Fernanda S.</span>
+                    <span class="t-dot">•</span>
+                    <span class="t-role">Aprovada ENEM 2024</span>
+                    <span class="t-verified">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#00D4C8"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Verificado
+                    </span>
+                  </div>
+                  <div class="t-stars">★★★★★</div>
+                </div>
+              </div>
+              <p class="t-text">Nunca conseguia manter constância. Com a trilha personalizada, estudei todos os dias por 4 meses e passei!</p>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="testimonial">
+            <div class="t-avatar-wrap">
+              <div class="t-avatar" style="background: linear-gradient(135deg, #1a2e50 0%, #0d1a30 100%);">
+                <span class="t-avatar-initials">RM</span>
+              </div>
+            </div>
+            <div class="t-body">
+              <div class="t-header">
+                <div>
+                  <div class="t-name-row">
+                    <span class="t-name">Rafael M.</span>
+                    <span class="t-dot">•</span>
+                    <span class="t-role">Concurso PF — Aprovado</span>
+                    <span class="t-verified">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#00D4C8"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Verificado
+                    </span>
+                  </div>
+                  <div class="t-stars">★★★★★</div>
+                </div>
+              </div>
+              <p class="t-text">O cronograma automático me poupou horas de planejamento. Só me preocupei em estudar.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button class="btn-restart" onclick="restartQuiz()">↺ Refazer o quiz</button>
+    </div>
+  </section>
+
+  <!-- Global Trust bar — fixed at bottom of all screens -->
+  <div class="global-trust-bar">
+    <div class="global-trust-item">
+      <div class="global-trust-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00D4C8" stroke-width="2"><path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6l-8-4z"/><path d="M9 12l2 2 4-4" stroke="#00D4C8" stroke-width="2"/></svg>
+      </div>
+      <span>Dados protegidos</span>
+    </div>
+    <div class="global-trust-item">
+      <div class="global-trust-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#00D4C8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <span>4.9/5 no App Store</span>
+    </div>
+    <div class="global-trust-item">
+      <div class="global-trust-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00D4C8" stroke-width="2"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><circle cx="17" cy="7" r="2"/><path d="M21 21v-2a3 3 0 00-2-2.83"/></svg>
+      </div>
+      <span>+120 mil estudantes</span>
+    </div>
+    <div class="global-trust-item">
+      <div class="global-trust-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00D4C8" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+      </div>
+      <span>+8 mil aprovados</span>
+    </div>
+  </div>
+
+  <script src="quiz.js"></script>
+</body>
+</html>

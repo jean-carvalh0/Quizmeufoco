@@ -150,8 +150,8 @@ const questions = [
   },
   {
     id: 12,
-    image: 'assets/img_goal.png',
-    imageAlt: 'Meta final',
+    image: 'assets/img_final.png',
+    imageAlt: 'Chegou até aqui — sua aprovação está próxima',
     coachHint: 'Última pergunta! Promessa de Nina 🤞',
     text: 'Qual dessas frases mais representa você agora?',
     key: 'perfil_final',
